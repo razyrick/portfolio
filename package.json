@@ -3,6 +3,7 @@
   "description": "Build a full-stack web application with Next.js.",
   "private": true,
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "next": "15.3.3",
     "react": "19.0.0",
     "react-dom": "19.0.0"
