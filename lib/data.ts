@@ -6,7 +6,7 @@ export const portfolioData = {
   },
   social: {
     github: "https://github.com/razyrick",
-    linkedin: "https://www.linkedin.com/in/john-charlie-catedrilla-4b5936232/",
+    linkedin: "https://www.linkedin.com/in/john-charlie-catedrilla/",
   },
   techStacks: {
     frontend: {
