@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import {
   about,
   approach,
@@ -59,8 +57,9 @@ export default function Home() {
 
       <header className={styles.topbar}>
         <div className={styles.brand}>
-          {/* Decorative mark: adjacent text supplies the accessible identity. */}
-          <Image
+          {/* The approved static mark bypasses the unavailable Cloudflare Images binding. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             className={styles.brandMark}
             src="/images/jcharlie-shield-logo.webp"
             alt=""

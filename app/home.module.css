@@ -1067,7 +1067,7 @@
   }
 
   .mapViewport {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 5;
   }
 
   .mapWorld {
