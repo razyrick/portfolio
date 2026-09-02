@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import {
   about,
+  approach,
   capabilities,
   contact,
   experience,
@@ -87,20 +88,12 @@ export default function Home() {
           <aside className={styles.profile} aria-labelledby="profile-name">
             <span className={styles.microLabel}>Player profile</span>
             <h1 className={styles.profileTitle} id="profile-name">
-              John Charlie
-              <br />
-              Catedrilla
+              <span className={styles.profileNamePart}>John</span>{" "}
+              <span className={styles.profileNamePart}>Charlie</span>{" "}
+              <span className={styles.profileNamePart}>Catedrilla</span>
             </h1>
             <p className={styles.role}>{experience.entries[0]?.role}</p>
             <p className={styles.profileCopy}>{hero.introduction}</p>
-            <div className={styles.profileActions}>
-              <a
-                className={styles.primaryAction}
-                href={hero.primaryAction.href}
-              >
-                {hero.primaryAction.label}
-              </a>
-            </div>
             <div className={styles.profileRecord}>
               <span className={styles.microLabel}>Record</span>
               {profileRecordRows.map((row) => (
@@ -140,6 +133,17 @@ export default function Home() {
               {about.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
+            </div>
+            <div className={styles.approach}>
+              <h3 className={styles.approachTitle}>{approach.heading}</h3>
+              <ul className={styles.approachList}>
+                {approach.items.map((item) => (
+                  <li key={item.title}>
+                    <strong>{item.title}</strong>
+                    <p>{item.body}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 

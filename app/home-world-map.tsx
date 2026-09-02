@@ -19,7 +19,13 @@ const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 /** Reads one of the approved stable fragments from a URL hash. */
 function keyFromHash(hash: string): DestinationKey | null {
-  const fragment = decodeURIComponent(hash.replace(/^#/, ""));
+  let fragment: string;
+  try {
+    fragment = decodeURIComponent(hash.replace(/^#/, ""));
+  } catch {
+    return null;
+  }
+
   return (
     DESTINATION_ORDER.find(
       (candidate) => destinations[candidate].fragment === fragment,
@@ -305,10 +311,11 @@ export function WorldMap() {
               key={key}
               href={`#${dest.fragment}`}
               className={styles.railLink}
+              aria-label={dest.label}
               aria-current={selectedKey === key ? "true" : undefined}
               onClick={(event) => handleDestinationClick(event, key)}
             >
-              {dest.label}
+              {dest.railLabel ?? dest.label}
             </a>
           );
         })}

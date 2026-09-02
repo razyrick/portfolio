@@ -33,6 +33,8 @@ export interface JournalItem {
 export interface Destination {
   /** Marker and destination-rail accessible name. */
   label: string;
+  /** Optional compact label used only in the mobile destination rail. */
+  railLabel?: string;
   /** Approved stable URL fragment. */
   fragment: string;
   /** Token anchor in the 1536×1024 map world. */
@@ -71,8 +73,8 @@ export const destinations: Record<DestinationKey, Destination> = {
   home: {
     label: "Home",
     fragment: "home",
-    x: 768,
-    y: 520,
+    x: HOME_ANCHOR.x,
+    y: HOME_ANCHOR.y,
     markerX: "50%",
     markerY: "58%",
     homeMarker: true,
@@ -119,6 +121,7 @@ export const destinations: Record<DestinationKey, Destination> = {
   },
   projects: {
     label: "Selected work",
+    railLabel: "Work",
     fragment: "selected-work",
     x: 780,
     y: 208,
@@ -174,6 +177,7 @@ export const destinations: Record<DestinationKey, Destination> = {
   },
   optional: {
     label: "Optional quests",
+    railLabel: "Quests",
     fragment: "optional-quests",
     x: 1052,
     y: 706,
@@ -194,6 +198,7 @@ export const destinations: Record<DestinationKey, Destination> = {
   },
   contact: {
     label: "Party invite",
+    railLabel: "Invite",
     fragment: "party-invite",
     x: 1180,
     y: 858,
