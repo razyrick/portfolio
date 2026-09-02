@@ -1,0 +1,320 @@
+/*
+ * Detail-route-only presentation for /work/[slug].
+ * Consumes shared tokens from app/globals.css; the homepage must not
+ * depend on this file. Composition stays responsive from 320px upward.
+ */
+
+.skipLink {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-soft);
+  background: var(--background);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.skipLink:focus-visible {
+  left: 0;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.siteHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 24px;
+  padding: 8px clamp(16px, 4vw, 32px);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+
+.brand,
+.returnLink,
+.footerLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+/* Article */
+.article {
+  width: 100%;
+  max-width: 72ch;
+  margin-inline: auto;
+  padding: clamp(24px, 5vw, 56px) clamp(16px, 4vw, 32px) clamp(40px, 6vw, 72px);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.title {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5.5vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.lede {
+  margin: 0 0 20px;
+  font-size: clamp(1.0625rem, 2.5vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.recognition {
+  display: inline-block;
+  margin: 0 0 24px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+.confidentiality {
+  display: block;
+  margin: 0 0 36px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-soft);
+  background: var(--surface-soft);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* Sections */
+.section {
+  margin: 0 0 36px;
+}
+
+.sectionTitle {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sectionTitle::after {
+  content: "";
+  display: block;
+  width: 32px;
+  margin-top: 8px;
+  border-top: 2px solid var(--gold);
+}
+
+.body {
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.list li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+}
+
+/* Technology categories */
+.tags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+}
+
+/* Public evidence link */
+.evidenceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-soft);
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.evidenceLink:visited {
+  color: var(--link-visited);
+}
+
+.evidenceLink:hover {
+  color: var(--link-hover);
+  border-color: var(--gold);
+  background: var(--surface-soft);
+}
+
+.evidenceLink:active {
+  color: var(--link-active);
+}
+
+/* Sibling work navigation */
+.siblingNav {
+  width: 100%;
+  max-width: 72ch;
+  margin-inline: auto;
+  padding: 0 clamp(16px, 4vw, 32px) clamp(40px, 6vw, 72px);
+}
+
+.siblingTitle {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.siblingList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.siblingLink {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+  min-height: 44px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-soft);
+  background: var(--surface-soft);
+  text-decoration: none;
+}
+
+.siblingLabel {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.siblingHeading {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.siblingLink:visited .siblingHeading {
+  color: var(--link-visited);
+}
+
+.siblingLink:hover {
+  border-color: var(--gold);
+  background: var(--surface);
+}
+
+.siblingLink:hover .siblingHeading {
+  color: var(--link-hover);
+}
+
+.siblingLink:active .siblingHeading {
+  color: var(--link-active);
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--line);
+  background: var(--surface-soft);
+  padding: 16px clamp(16px, 4vw, 32px) 32px;
+}
+
+.footerInner {
+  max-width: 72ch;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 24px;
+}
+
+.footerNote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+/* Two-column sibling grid once width permits. */
+@media (min-width: 768px) {
+  .siblingList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

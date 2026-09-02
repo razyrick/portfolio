@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
+/*
+ * Shared production tokens — restrained dark, pixel-world-adjacent.
+ * Vocabulary inherited from the approved portfolio world-map direction
+ * (docs/adr/2026-09-01-1211-portfolio-revamp). Both route families
+ * (homepage map and /work detail routes) consume these tokens.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* Color */
+  --background: #07111f;
+  --background-accent: #173352;
+  --surface: rgba(7, 17, 31, 0.94);
+  --surface-soft: rgba(9, 24, 42, 0.82);
+  --line: rgba(180, 199, 219, 0.2);
+  --line-strong: rgba(229, 183, 91, 0.62);
+  --foreground: #edf2f7;
+  --muted: #9aabba;
+  --gold: #e5b75b;
+  --gold-soft: #f4d992;
+  --blue: #57bad2;
+  --green: #9aca58;
+  --danger: #ef8f64;
+
+  /* Links — default, visited, hover, active are each visually distinct
+     without relying on motion. */
+  --link: var(--blue);
+  --link-visited: var(--muted);
+  --link-hover: var(--gold-soft);
+  --link-active: var(--gold);
+  --focus-ring: var(--gold-soft);
+
+  /* Type */
+  --font-body: var(--font-geist-sans), ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-geist-mono), ui-monospace, SFMono-Regular,
+    Menlo, monospace;
+
+  /* Shape */
+  --radius: 10px;
+  --radius-soft: 7px;
+
+  /* Layout rhythm shared by the homepage world composition. */
+  --header: 68px;
+  --ease: cubic-bezier(0.2, 0.75, 0.2, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-blue: var(--blue);
+  --color-green: var(--green);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Base semantics */
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  min-height: 100vh;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(
+    circle at 50% -20%,
+    var(--background-accent) 0,
+    var(--background) 45%
+  );
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Link defaults — route families compose on top of these. */
+a {
+  color: var(--link);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--link) 55%, transparent);
+  text-underline-offset: 3px;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+a:active {
+  color: var(--link-active);
+}
+
+/* Immediate, visible focus treatment. */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: #13200c;
+  background: var(--gold-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
