@@ -43,3 +43,6 @@ next-env.d.ts
 .dev.vars*
 /dist/
 .vinext/
+
+# local agent workspaces
+/.codex-work/
