@@ -29,12 +29,6 @@ export interface Identity {
   role: string;
 }
 
-export interface HeroContent {
-  headline: string;
-  introduction: string;
-  primaryAction: ContentLink;
-  secondaryActions: readonly ContentLink[];
-}
 
 export interface AboutContent {
   heading: string;
@@ -151,27 +145,14 @@ export const identity: Identity = {
   handle: "razyrick",
   role: "AI and full-stack product engineer",
 };
-
 /** Fragment on the homepage where Selected Work summaries live. */
 export const selectedWorkHref = "/#selected-work";
 
-export const hero: HeroContent = {
-  headline: "AI and full-stack product engineer",
+
+export const hero = {
   introduction:
     "I'm John Charlie Catedrilla. I build production web applications end to end — from data models and machine-learning features to the interfaces people actually use.",
-  primaryAction: {
-    label: "View selected work",
-    href: "#selected-work",
-    external: false,
-  },
-  secondaryActions: [
-    {
-      label: "Get in touch",
-      href: "#party-invite",
-      external: false,
-    },
-  ],
-};
+} as const;
 
 export const about: AboutContent = {
   heading: "About",

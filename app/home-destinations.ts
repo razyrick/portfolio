@@ -228,13 +228,14 @@ export const destinations: Record<DestinationKey, Destination> = {
 };
 
 /** Route geometry from the approved artifact, hub in the central clearing. */
+const routeOrigin = `M${HOME_ANCHOR.x} ${HOME_ANCHOR.y}`;
 export const ROUTE_PATHS = [
-  "M768 520 C670 470 575 390 495 312",
-  "M768 520 C748 420 755 305 780 208",
-  "M768 520 C875 470 980 375 1080 314",
-  "M768 520 C670 570 570 642 486 710",
-  "M768 520 C875 554 960 620 1052 706",
-  "M768 520 C930 610 1075 730 1180 858",
+  `${routeOrigin} C670 470 575 390 495 312`,
+  `${routeOrigin} C748 420 755 305 780 208`,
+  `${routeOrigin} C875 470 980 375 1080 314`,
+  `${routeOrigin} C670 570 570 642 486 710`,
+  `${routeOrigin} C875 554 960 620 1052 706`,
+  `${routeOrigin} C930 610 1075 730 1180 858`,
 ] as const;
 
 /** Factual record rows for the player profile card. */
