@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import {
   about,
   approach,
@@ -13,10 +15,9 @@ import {
 import {
   RESUME_FILE_NAME,
   RESUME_PATH,
-  destinations,
   profileRecordRows,
 } from "./home-destinations";
-import { ContactIcon, type ContactIconId } from "./contact-icons";
+import { ContactIcon } from "./contact-icons";
 import { HomeStructuredData } from "./home-structured-data";
 import { WorldMap } from "./home-world-map";
 
@@ -59,7 +60,7 @@ export default function Home() {
       <header className={styles.topbar}>
         <div className={styles.brand}>
           {/* Decorative mark: adjacent text supplies the accessible identity. */}
-          <img
+          <Image
             className={styles.brandMark}
             src="/images/jcharlie-shield-logo.webp"
             alt=""
@@ -113,10 +114,11 @@ export default function Home() {
                   href={link.href}
                   aria-label={link.name}
                   title={link.name}
+                  data-label={link.name}
                   {...(link.external ? EXTERNAL_LINK_ATTRS : {})}
                 >
                   <ContactIcon
-                    id={link.id as ContactIconId}
+                    id={link.id}
                     className={styles.profileLinkIcon}
                   />
                 </a>

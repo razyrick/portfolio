@@ -1,6 +1,13 @@
 import type { ContactIconId } from "./contact-icons";
 
-import { capabilities, contact, experience, personalWork, selectedWork, thesisNote } from "@/lib/portfolio-content";
+import {
+  capabilities,
+  contact,
+  experience,
+  personalWork,
+  selectedWork,
+  thesisNote,
+} from "@/lib/portfolio-content";
 
 /**
  * World-map destination model for the approved homepage composition
@@ -230,7 +237,7 @@ export const destinations: Record<DestinationKey, Destination> = {
         copy: "Download the public résumé (PDF)",
         href: RESUME_PATH,
         download: RESUME_FILE_NAME,
-        icon: "resume" as ContactIconId,
+        icon: "resume",
       },
     ],
     actionLabel: "Open contact routes",

@@ -109,10 +109,8 @@
 }
 
 /*
- * World composition: profile / map / rail / journal. The long-form
- * section stack below it is the no-JS and mobile fallback; once
- * JavaScript is available (html.has-js is set pre-paint) an enhanced
- * desktop viewport ends the page at this composition.
+ * The server-rendered section stack remains available until the client
+ * map has hydrated and marked the interactive journal ready.
  */
 .worldShell {
   min-height: calc(100vh - var(--header));
@@ -121,7 +119,7 @@
 }
 
 @media (min-width: 901px) {
-  :global(html.has-js) .worldSections {
+  :global(html.world-map-ready) .worldSections {
     display: none;
   }
 }

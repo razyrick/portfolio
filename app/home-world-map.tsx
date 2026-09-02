@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+} from "react";
 import {
   DESTINATION_ORDER,
   HOME_ANCHOR,
@@ -14,7 +20,7 @@ import styles from "./home.module.css";
 
 const WORLD_WIDTH = 1536;
 const WORLD_HEIGHT = 1024;
-const MOBILE_BREAKPOINT = 900;
+const DESKTOP_MEDIA_QUERY = "(min-width: 901px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 /** Reads one of the approved stable fragments from a URL hash. */
@@ -126,7 +132,7 @@ export function WorldMap() {
   const updateCamera = (key: DestinationKey) => {
     const world = worldRef.current;
     if (!world || !world.parentElement) return;
-    if (window.innerWidth > MOBILE_BREAKPOINT) {
+    if (window.matchMedia(DESKTOP_MEDIA_QUERY).matches) {
       world.style.removeProperty("--camera-x");
       world.style.removeProperty("--camera-y");
       return;
@@ -163,6 +169,12 @@ export function WorldMap() {
       }
     }
   };
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.add("world-map-ready");
+    return () => root.classList.remove("world-map-ready");
+  }, []);
 
   useEffect(() => {
     const initialKey = keyFromHash(window.location.hash) ?? "home";
@@ -222,9 +234,9 @@ export function WorldMap() {
     event: MouseEvent<HTMLAnchorElement>,
   ) => {
     const actionKey = destination?.actionKey;
-    if (!actionKey || actionKey === selectedKey) return;
-    if (window.innerWidth <= MOBILE_BREAKPOINT) return;
+    if (!actionKey || !window.matchMedia(DESKTOP_MEDIA_QUERY).matches) return;
     event.preventDefault();
+    if (actionKey === selectedKey) return;
     selectDestination(actionKey, { push: true });
   };
 
