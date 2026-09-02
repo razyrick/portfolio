@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
-
 import {
   DESTINATION_ORDER,
   HOME_ANCHOR,
@@ -9,6 +8,7 @@ import {
   destinations,
   type DestinationKey,
 } from "./home-destinations";
+import { ContactIcon } from "./contact-icons";
 
 import styles from "./home.module.css";
 
@@ -193,6 +193,8 @@ export function WorldMap() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- listeners close over refs only
   }, []);
 
+  const destination = destinations[selectedKey];
+
   const handleDestinationClick = (
     event: MouseEvent<HTMLAnchorElement>,
     key: DestinationKey,
@@ -211,7 +213,20 @@ export function WorldMap() {
     selectDestination(key, { push: true });
   };
 
-  const destination = destinations[selectedKey];
+  /**
+   * On the enhanced desktop composition the long-form section stack is
+   * not visible, so the journal action re-selects its destination
+   * instead of scrolling; mobile and no-JS keep the anchor navigation.
+   */
+  const handleJournalActionClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+  ) => {
+    const actionKey = destination?.actionKey;
+    if (!actionKey || actionKey === selectedKey) return;
+    if (window.innerWidth <= MOBILE_BREAKPOINT) return;
+    event.preventDefault();
+    selectDestination(actionKey, { push: true });
+  };
 
   return (
     <>
@@ -351,6 +366,9 @@ export function WorldMap() {
                           ? { download: item.download }
                           : {})}
                       >
+                        {item.icon ? (
+                          <ContactIcon id={item.icon} className={styles.journalIcon} />
+                        ) : null}
                         {item.title}
                       </a>
                     ) : (
@@ -361,7 +379,11 @@ export function WorldMap() {
                 </li>
               ))}
             </ul>
-            <a className={styles.journalAction} href={destination.actionHref}>
+            <a
+              className={styles.journalAction}
+              href={destination.actionHref}
+              onClick={handleJournalActionClick}
+            >
               {destination.actionLabel}
             </a>
           </div>

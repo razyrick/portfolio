@@ -70,6 +70,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="antialiased">
+        {/*
+          Marks JS availability before first paint so the enhanced desktop
+          homepage can suppress the duplicate long-form stack without a
+          visible flash; the no-JS fallback never receives the class.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add("has-js");`,
+          }}
+        />
         {children}
         <Analytics />
       </body>

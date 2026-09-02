@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import {
   about,
   approach,
@@ -9,7 +7,7 @@ import {
   hero,
   personalWork,
   selectedWork,
-  workNotes,
+  thesisNote,
 } from "@/lib/portfolio-content";
 
 import {
@@ -18,6 +16,7 @@ import {
   destinations,
   profileRecordRows,
 } from "./home-destinations";
+import { ContactIcon, type ContactIconId } from "./contact-icons";
 import { HomeStructuredData } from "./home-structured-data";
 import { WorldMap } from "./home-world-map";
 
@@ -30,28 +29,24 @@ const EXTERNAL_LINK_ATTRS = {
   rel: "noopener noreferrer",
 } as const;
 
-/** Card classification labels from the canonical note collection. */
-const workLabelBySlug: Record<string, string> = Object.fromEntries(
-  workNotes.map((note) => [note.slug, note.label]),
-);
-
 const profileLinks = ["email", "github", "linkedin"].flatMap((id) => {
   const channel = contact.channels.find((candidate) => candidate.id === id);
   if (!channel) return [];
   return [
     {
+      id: channel.id,
       href: channel.href,
-      text: channel.id === "linkedin" ? "LinkedIn" : channel.value,
+      name: `${channel.label}: ${channel.value}`,
       external: channel.external,
     },
   ];
 });
 
 /**
- * Approved world-map homepage (SAG-1041). The server shell renders the
- * complete factual narrative in initial HTML; `WorldMap` layers the
- * interactive map, destination rail, and Quest Journal on top as a
- * progressive enhancement.
+ * Approved world-map homepage. The server shell renders the complete
+ * factual narrative in initial HTML; `WorldMap` layers the interactive
+ * map, destination rail, and Quest Journal on top as a progressive
+ * enhancement.
  */
 export default function Home() {
   return (
@@ -63,8 +58,16 @@ export default function Home() {
 
       <header className={styles.topbar}>
         <div className={styles.brand}>
+          {/* Decorative mark: adjacent text supplies the accessible identity. */}
+          <img
+            className={styles.brandMark}
+            src="/images/jcharlie-shield-logo.webp"
+            alt=""
+            width={26}
+            height={26}
+          />
           <strong>John Charlie</strong>
-          <span>ML Engineer · Full Stack Developer</span>
+          <span>Machine Learning Engineer / Full Stack Developer</span>
         </div>
         <nav className={styles.topnav} aria-label="Primary">
           <a className={styles.topnavLink} href="#home">
@@ -108,9 +111,14 @@ export default function Home() {
                 <a
                   key={link.href}
                   href={link.href}
+                  aria-label={link.name}
+                  title={link.name}
                   {...(link.external ? EXTERNAL_LINK_ATTRS : {})}
                 >
-                  {link.text}
+                  <ContactIcon
+                    id={link.id as ContactIconId}
+                    className={styles.profileLinkIcon}
+                  />
                 </a>
               ))}
             </div>
@@ -154,23 +162,26 @@ export default function Home() {
           >
             <span className={styles.microLabel}>Main quest</span>
             <h2 className={styles.sectionTitle} id="selected-work-heading">
-              Selected Work
+              {selectedWork.heading}
             </h2>
-            <p className={styles.sectionBlurb}>
-              {destinations.projects.summary}
-            </p>
+            <p className={styles.sectionBlurb}>{selectedWork.blurb}</p>
             <ul className={styles.workCards}>
-              {selectedWork.map((entry) => (
-                <li className={styles.workCard} key={entry.slug}>
-                  <span className={styles.workCardLabel}>
-                    {workLabelBySlug[entry.slug]}
-                  </span>
-                  <h3 className={styles.workCardTitle}>
-                    <Link href={entry.href}>{entry.title}</Link>
-                  </h3>
+              {selectedWork.summaries.map((entry) => (
+                <li className={styles.workCard} key={entry.title}>
+                  <span className={styles.workCardLabel}>{entry.label}</span>
+                  <h3 className={styles.workCardTitle}>{entry.title}</h3>
                   <p className={styles.workCardSummary}>{entry.summary}</p>
                 </li>
               ))}
+              <li className={styles.workCard} key={thesisNote.slug}>
+                <span className={styles.workCardLabel}>
+                  {thesisNote.label}
+                </span>
+                <h3 className={styles.workCardTitle}>
+                  <a href={`/work/${thesisNote.slug}`}>{thesisNote.title}</a>
+                </h3>
+                <p className={styles.workCardSummary}>{thesisNote.summary}</p>
+              </li>
             </ul>
           </section>
 
@@ -270,6 +281,10 @@ export default function Home() {
                     href={channel.href}
                     {...(channel.external ? EXTERNAL_LINK_ATTRS : {})}
                   >
+                    <ContactIcon
+                      id={channel.id}
+                      className={styles.contactIcon}
+                    />
                     {channel.value}
                   </a>
                 </li>
@@ -278,6 +293,7 @@ export default function Home() {
             <p className={styles.resumeNote}>
               Prefer a document?{" "}
               <a href={RESUME_PATH} {...RESUME_LINK_ATTRS}>
+                <ContactIcon id="resume" className={styles.contactIcon} />
                 Download the résumé (PDF)
               </a>
               .

@@ -1,11 +1,6 @@
-import {
-  capabilities,
-  contact,
-  experience,
-  personalWork,
-  workNotes,
-  type WorkNote,
-} from "@/lib/portfolio-content";
+import type { ContactIconId } from "./contact-icons";
+
+import { capabilities, contact, experience, personalWork, selectedWork, thesisNote } from "@/lib/portfolio-content";
 
 /**
  * World-map destination model for the approved homepage composition
@@ -28,6 +23,8 @@ export interface JournalItem {
   external?: boolean;
   /** Suggests a download filename (first-party résumé asset). */
   download?: string;
+  /** Contact icon shown beside the label/value in Party Invite. */
+  icon?: ContactIconId;
 }
 
 export interface Destination {
@@ -51,6 +48,11 @@ export interface Destination {
   items: readonly JournalItem[];
   actionLabel: string;
   actionHref: string;
+  /**
+   * Destination re-selected by the journal action on the enhanced desktop
+   * composition, where the long-form section stack is not visible.
+   */
+  actionKey?: DestinationKey;
 }
 
 export const DESTINATION_ORDER = [
@@ -64,10 +66,6 @@ export const DESTINATION_ORDER = [
 ] as const;
 
 export type DestinationKey = (typeof DESTINATION_ORDER)[number];
-
-const publicNote: WorkNote | undefined = workNotes.find(
-  (note) => note.kind === "public",
-);
 
 export const destinations: Record<DestinationKey, Destination> = {
   home: {
@@ -94,6 +92,7 @@ export const destinations: Record<DestinationKey, Destination> = {
     ],
     actionLabel: "View selected work",
     actionHref: "#selected-work",
+    actionKey: "projects",
   },
   about: {
     label: "About",
@@ -118,6 +117,7 @@ export const destinations: Record<DestinationKey, Destination> = {
     ],
     actionLabel: "Read profile",
     actionHref: "#about",
+    actionKey: "about",
   },
   projects: {
     label: "Selected work",
@@ -129,15 +129,21 @@ export const destinations: Record<DestinationKey, Destination> = {
     markerY: "20.3%",
     kicker: "Main quest",
     title: "Selected Work",
-    summary:
-      "Representative work across machine learning systems, data-rich applications, and operational product tooling.",
-    items: workNotes.map((note) => ({
-      title: note.title,
-      copy: note.label,
-      href: `/work/${note.slug}`,
-    })),
+    summary: selectedWork.blurb,
+    items: [
+      ...selectedWork.summaries.map((entry) => ({
+        title: entry.title,
+        copy: entry.label,
+      })),
+      {
+        title: thesisNote.title,
+        copy: thesisNote.label,
+        href: `/work/${thesisNote.slug}`,
+      },
+    ],
     actionLabel: "View quest log",
     actionHref: "#selected-work",
+    actionKey: "projects",
   },
   experience: {
     label: "Experience",
@@ -156,6 +162,7 @@ export const destinations: Record<DestinationKey, Destination> = {
     })),
     actionLabel: "Open campaign log",
     actionHref: "#experience",
+    actionKey: "experience",
   },
   loadout: {
     label: "Loadout",
@@ -174,6 +181,7 @@ export const destinations: Record<DestinationKey, Destination> = {
     })),
     actionLabel: "Inspect loadout",
     actionHref: "#loadout",
+    actionKey: "loadout",
   },
   optional: {
     label: "Optional quests",
@@ -195,6 +203,7 @@ export const destinations: Record<DestinationKey, Destination> = {
     })),
     actionLabel: "Browse side quests",
     actionHref: "#optional-quests",
+    actionKey: "optional",
   },
   contact: {
     label: "Party invite",
@@ -214,16 +223,19 @@ export const destinations: Record<DestinationKey, Destination> = {
         copy: channel.value,
         href: channel.href,
         external: channel.external,
+        icon: channel.id,
       })),
       {
         title: "Résumé",
         copy: "Download the public résumé (PDF)",
         href: RESUME_PATH,
         download: RESUME_FILE_NAME,
+        icon: "resume" as ContactIconId,
       },
     ],
     actionLabel: "Open contact routes",
     actionHref: "#party-invite",
+    actionKey: "contact",
   },
 };
 
@@ -242,5 +254,5 @@ export const ROUTE_PATHS = [
 export const profileRecordRows = [
   { label: "Current campaign", value: experience.entries[0]?.company ?? "" },
   { label: "Additional campaign", value: experience.entries[1]?.company ?? "" },
-  { label: "Notable milestone", value: publicNote?.recognition ?? "" },
+  { label: "Notable milestone", value: thesisNote.recognition ?? "" },
 ] as const;

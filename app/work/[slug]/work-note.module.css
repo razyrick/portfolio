@@ -28,7 +28,6 @@
   flex-direction: column;
 }
 
-/* Header */
 .siteHeader {
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +58,6 @@
   width: 100%;
 }
 
-/* Article */
 .article {
   width: 100%;
   max-width: 72ch;
@@ -107,18 +105,6 @@
   color: var(--gold-soft);
 }
 
-.confidentiality {
-  display: block;
-  margin: 0 0 36px;
-  padding: 14px 16px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-soft);
-  background: var(--surface-soft);
-  font-size: 0.9375rem;
-  line-height: 1.55;
-}
-
-/* Sections */
 .section {
   margin: 0 0 36px;
 }
@@ -168,7 +154,6 @@
   background: var(--gold);
 }
 
-/* Technology categories */
 .tags {
   list-style: none;
   margin: 0;
@@ -187,7 +172,6 @@
   font-size: 0.8125rem;
 }
 
-/* Public evidence link */
 .evidenceLink {
   display: inline-flex;
   align-items: center;
@@ -217,78 +201,6 @@
   color: var(--link-active);
 }
 
-/* Sibling work navigation */
-.siblingNav {
-  width: 100%;
-  max-width: 72ch;
-  margin-inline: auto;
-  padding: 0 clamp(16px, 4vw, 32px) clamp(40px, 6vw, 72px);
-}
-
-.siblingTitle {
-  margin: 0 0 16px;
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.siblingList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 12px;
-}
-
-.siblingLink {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  height: 100%;
-  min-height: 44px;
-  padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-soft);
-  background: var(--surface-soft);
-  text-decoration: none;
-}
-
-.siblingLabel {
-  font-family: var(--font-display);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.siblingHeading {
-  font-family: var(--font-display);
-  font-size: 0.9375rem;
-  font-weight: 700;
-}
-
-.siblingLink:visited .siblingHeading {
-  color: var(--link-visited);
-}
-
-.siblingLink:hover {
-  border-color: var(--gold);
-  background: var(--surface);
-}
-
-.siblingLink:hover .siblingHeading {
-  color: var(--link-hover);
-}
-
-.siblingLink:active .siblingHeading {
-  color: var(--link-active);
-}
-
-/* Footer */
 .footer {
   border-top: 1px solid var(--line);
   background: var(--surface-soft);
@@ -310,11 +222,4 @@
   font-family: var(--font-display);
   font-size: 0.8125rem;
   color: var(--muted);
-}
-
-/* Two-column sibling grid once width permits. */
-@media (min-width: 768px) {
-  .siblingList {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }

@@ -3,12 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import {
-  getWorkNoteBySlug,
   identity,
   selectedWorkHref,
-  workNotes,
+  thesisNote,
   type ContentLink,
-  type WorkNote,
 } from "@/lib/portfolio-content";
 import {
   SOCIAL_IMAGE_ALT,
@@ -22,14 +20,14 @@ import {
 import styles from "./work-note.module.css";
 
 /**
- * Only the five configured work notes are prerendered; every other slug
- * falls through to the framework 404 boundary.
+ * Only the public thesis route is prerendered; every other slug falls
+ * through to the framework 404 boundary.
  */
 export const dynamicParams = false;
 export const dynamic = "force-static";
 
 export function generateStaticParams() {
-  return workNotes.map((note) => ({ slug: note.slug }));
+  return [{ slug: thesisNote.slug }];
 }
 
 interface WorkNotePageProps {
@@ -37,24 +35,25 @@ interface WorkNotePageProps {
 }
 
 /**
- * Route-specific JSON-LD describing the visible work-note document.
- * Only approved corpus facts appear here. Representative notes never
- * gain `sameAs` or other properties that could imply public source
- * artifacts; the public thesis references its approved repository.
+ * Route-specific JSON-LD describing the visible thesis document. Only
+ * approved corpus facts appear here; `sameAs` references the approved
+ * public repository.
  */
-function workNoteJsonLd(note: WorkNote, url: string) {
+function workNoteJsonLd(url: string) {
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    name: note.title,
+    name: thesisNote.title,
     url,
-    description: note.summary,
+    description: thesisNote.summary,
     author: authorNode(),
     inLanguage: "en",
-    keywords: [...note.technologyCategories],
-    ...(note.recognition ? { award: note.recognition } : {}),
-    ...(note.kind === "public" && note.evidenceLinks?.length
-      ? { sameAs: note.evidenceLinks.map((link) => link.href) }
+    keywords: [...thesisNote.technologyCategories],
+    ...(thesisNote.recognition
+      ? { award: thesisNote.recognition }
+      : {}),
+    ...(thesisNote.evidenceLinks?.length
+      ? { sameAs: thesisNote.evidenceLinks.map((link) => link.href) }
       : {}),
   };
 }
@@ -63,19 +62,18 @@ export async function generateMetadata({
   params,
 }: WorkNotePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const note = getWorkNoteBySlug(slug);
-  if (!note) return {};
+  if (slug !== thesisNote.slug) return {};
 
-  const url = absoluteUrl(`/work/${note.slug}`);
+  const url = absoluteUrl(`/work/${thesisNote.slug}`);
   return {
-    title: note.title,
-    description: note.metaDescription,
+    title: thesisNote.title,
+    description: thesisNote.metaDescription,
     alternates: { canonical: url },
     openGraph: {
       type: "article",
       url,
-      title: note.title,
-      description: note.metaDescription,
+      title: thesisNote.title,
+      description: thesisNote.metaDescription,
       siteName: identity.name,
       locale: "en_US",
       images: [
@@ -89,8 +87,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: note.title,
-      description: note.metaDescription,
+      title: thesisNote.title,
+      description: thesisNote.metaDescription,
       images: [SOCIAL_IMAGE_PATH],
     },
   };
@@ -104,14 +102,9 @@ function externalLinkAttributes(link: ContentLink) {
 
 export default async function WorkNotePage({ params }: WorkNotePageProps) {
   const { slug } = await params;
-  const note = getWorkNoteBySlug(slug);
-  if (!note) notFound();
+  if (slug !== thesisNote.slug) notFound();
 
-  const url = absoluteUrl(`/work/${note.slug}`);
-
-  const siblings = workNotes.filter(
-    (candidate) => candidate.slug !== note.slug,
-  );
+  const url = absoluteUrl(`/work/${thesisNote.slug}`);
 
   const sections: ReadonlyArray<{
     id: string;
@@ -120,26 +113,26 @@ export default async function WorkNotePage({ params }: WorkNotePageProps) {
     items?: readonly string[];
     variant?: "list" | "tags";
   }> = [
-    { id: "problem", heading: "The problem", body: note.problem },
+    { id: "problem", heading: "The problem", body: thesisNote.problem },
     {
       id: "scope",
-      heading: note.kind === "public" ? "What the project involved" : "Scope of the work",
-      items: note.responsibilities,
+      heading: "What the project involved",
+      items: thesisNote.responsibilities,
     },
     {
       id: "considerations",
-      heading: note.kind === "public" ? "Approach" : "Engineering considerations",
-      items: note.considerations,
+      heading: "Approach",
+      items: thesisNote.considerations,
     },
     {
       id: "capabilities",
       heading: "Capabilities demonstrated",
-      items: note.capabilities,
+      items: thesisNote.capabilities,
     },
     {
       id: "technologies",
       heading: "Technology categories",
-      items: note.technologyCategories,
+      items: thesisNote.technologyCategories,
       variant: "tags",
     },
   ];
@@ -149,7 +142,7 @@ export default async function WorkNotePage({ params }: WorkNotePageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(workNoteJsonLd(note, url)),
+          __html: JSON.stringify(workNoteJsonLd(url)),
         }}
       />
 
@@ -168,18 +161,12 @@ export default async function WorkNotePage({ params }: WorkNotePageProps) {
 
       <main id="work-note-content" className={styles.main}>
         <article className={styles.article}>
-          <p className={styles.eyebrow}>{note.label}</p>
-          <h1 className={styles.title}>{note.title}</h1>
-          <p className={styles.lede}>{note.summary}</p>
+          <p className={styles.eyebrow}>{thesisNote.label}</p>
+          <h1 className={styles.title}>{thesisNote.title}</h1>
+          <p className={styles.lede}>{thesisNote.summary}</p>
 
-          {note.recognition ? (
-            <p className={styles.recognition}>{note.recognition}</p>
-          ) : null}
-
-          {note.confidentialityNotice ? (
-            <p className={styles.confidentiality}>
-              {note.confidentialityNotice}
-            </p>
+          {thesisNote.recognition ? (
+            <p className={styles.recognition}>{thesisNote.recognition}</p>
           ) : null}
 
           {sections.map((section) => (
@@ -215,7 +202,7 @@ export default async function WorkNotePage({ params }: WorkNotePageProps) {
             </section>
           ))}
 
-          {note.evidenceLinks?.length ? (
+          {thesisNote.evidenceLinks?.length ? (
             <section
               className={styles.section}
               aria-labelledby="evidence-heading"
@@ -227,7 +214,7 @@ export default async function WorkNotePage({ params }: WorkNotePageProps) {
                 This project is public; the repository contains the source and
                 the full write-up.
               </p>
-              {note.evidenceLinks.map((link) => (
+              {thesisNote.evidenceLinks.map((link) => (
                 <p key={link.href} className={styles.body}>
                   <a
                     className={styles.evidenceLink}
@@ -241,23 +228,6 @@ export default async function WorkNotePage({ params }: WorkNotePageProps) {
             </section>
           ) : null}
         </article>
-
-        <nav className={styles.siblingNav} aria-label="More work notes">
-          <h2 className={styles.siblingTitle}>More work notes</h2>
-          <ul className={styles.siblingList}>
-            {siblings.map((sibling) => (
-              <li key={sibling.slug}>
-                <Link
-                  className={styles.siblingLink}
-                  href={`/work/${sibling.slug}`}
-                >
-                  <span className={styles.siblingLabel}>{sibling.label}</span>
-                  <span className={styles.siblingHeading}>{sibling.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </main>
 
       <footer className={styles.footer}>

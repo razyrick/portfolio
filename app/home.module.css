@@ -5,7 +5,6 @@
  * responsive from 320px upward; reduced motion is handled globally.
  */
 
-/* Skip link */
 .skipLink {
   position: absolute;
   left: -10000px;
@@ -26,7 +25,6 @@
   left: 0;
 }
 
-/* Top bar */
 .topbar {
   min-height: var(--header);
   display: flex;
@@ -40,9 +38,15 @@
 
 .brand {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 12px;
   white-space: nowrap;
+}
+
+.brandMark {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
 }
 
 .brand strong {
@@ -104,11 +108,22 @@
   background: rgba(229, 183, 91, 0.1);
 }
 
-/* World composition: profile / map / rail / journal */
+/*
+ * World composition: profile / map / rail / journal. The long-form
+ * section stack below it is the no-JS and mobile fallback; once
+ * JavaScript is available (html.has-js is set pre-paint) an enhanced
+ * desktop viewport ends the page at this composition.
+ */
 .worldShell {
   min-height: calc(100vh - var(--header));
   display: grid;
   grid-template-columns: minmax(220px, 16vw) minmax(560px, 1fr) minmax(300px, 21vw);
+}
+
+@media (min-width: 901px) {
+  :global(html.has-js) .worldSections {
+    display: none;
+  }
 }
 
 .microLabel {
@@ -118,7 +133,6 @@
   text-transform: uppercase;
 }
 
-/* Profile */
 .profile {
   position: relative;
   z-index: 3;
@@ -156,8 +170,6 @@
   line-height: 1.65;
 }
 
-
-
 .profileRecord {
   margin-top: 20px;
   padding-top: 16px;
@@ -181,28 +193,66 @@
   text-align: right;
 }
 
+/*
+ * Compact icon-only contact links. Each exposes its name to assistive
+ * tech via aria-label and a hover/focus label via data-label.
+ */
 .profileLinks {
   margin-top: auto;
   padding-top: 16px;
-  display: grid;
-  gap: 9px;
+  display: flex;
+  gap: 2px;
 }
 
 .profileLinks a {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-soft);
   color: var(--muted);
-  font-size: 12px;
-  text-underline-offset: 4px;
 }
 
 .profileLinks a:visited {
   color: var(--muted);
 }
 
-.profileLinks a:hover {
-  color: var(--foreground);
+.profileLinks a:hover,
+.profileLinks a:focus-visible {
+  color: var(--link-hover);
 }
 
-/* Map column */
+.profileLinks a::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-soft);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.profileLinks a:hover::after,
+.profileLinks a:focus-visible::after {
+  opacity: 1;
+}
+
+.profileLinkIcon {
+  width: 18px;
+  height: 18px;
+}
+
 .mapColumn {
   position: relative;
   grid-column: 2;
@@ -288,7 +338,6 @@
     radial-gradient(circle at 50% 48%, transparent 25%, rgba(2, 8, 15, 0.17) 100%);
 }
 
-/* Destination markers */
 .locations {
   position: absolute;
   inset: 0;
@@ -383,7 +432,6 @@
   line-height: 1.45;
 }
 
-/* Quest journal */
 .journal {
   position: relative;
   z-index: 3;
@@ -464,6 +512,13 @@
   line-height: 1.5;
 }
 
+.journalIcon {
+  width: 14px;
+  height: 14px;
+  margin-right: 7px;
+  vertical-align: -2px;
+}
+
 .journalAction {
   align-self: flex-start;
   min-height: 44px;
@@ -498,7 +553,6 @@
   display: none;
 }
 
-/* Editorial sections below the composition */
 .worldSections {
   width: 100%;
   max-width: 1160px;
@@ -542,6 +596,7 @@
   font-size: 15px;
   line-height: 1.75;
 }
+
 .approach {
   margin-top: 30px;
 }
@@ -581,7 +636,6 @@
   line-height: 1.6;
 }
 
-/* Selected work cards */
 .workCards {
   margin-top: 28px;
   padding: 0;
@@ -641,7 +695,6 @@
   line-height: 1.6;
 }
 
-/* Experience */
 .entryList {
   margin-top: 28px;
   padding: 0;
@@ -678,7 +731,6 @@
   gap: 6px;
 }
 
-/* Loadout */
 .loadoutGroups {
   margin-top: 28px;
   display: grid;
@@ -714,7 +766,6 @@
   color: var(--foreground);
 }
 
-/* Optional quests */
 .questList {
   margin-top: 28px;
   padding: 0;
@@ -755,7 +806,6 @@
   line-height: 1.6;
 }
 
-/* Party invite */
 .contactList {
   margin-top: 28px;
   padding: 0;
@@ -781,6 +831,19 @@
   text-transform: uppercase;
 }
 
+.contactItem a,
+.resumeNote a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contactIcon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
 .resumeNote {
   margin: 24px 0 0;
   max-width: 62ch;
@@ -789,7 +852,6 @@
   line-height: 1.7;
 }
 
-/* Animation */
 @keyframes tokenBob {
   from {
     transform: translateY(0);
@@ -825,7 +887,6 @@
   }
 }
 
-/* Narrow desktop */
 @media (max-width: 1180px) {
   .worldShell {
     grid-template-columns: 210px minmax(0, 1fr) 300px;
@@ -896,7 +957,6 @@
   .profileLinks {
     display: none;
   }
-
 
   .mapViewport {
     position: relative;
@@ -980,10 +1040,14 @@
   }
 }
 
-/* Small phones */
 @media (max-width: 430px) {
   .brand strong {
     font-size: 14px;
+  }
+
+  .brandMark {
+    width: 22px;
+    height: 22px;
   }
 
   .resumeLink {
