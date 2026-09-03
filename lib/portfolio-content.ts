@@ -18,7 +18,8 @@ export interface ContentLink {
 
 export interface Identity {
   name: string;
-  handle: string;
+  /** Exact public alias shown beside the legal name, e.g. "aka Razyrick". */
+  alias: string;
   role: string;
 }
 
@@ -131,7 +132,7 @@ export interface WorkNote {
 
 export const identity: Identity = {
   name: "John Charlie Catedrilla",
-  handle: "razyrick",
+  alias: "Razyrick",
   role: "AI and full-stack product engineer",
 };
 
@@ -143,9 +144,40 @@ export const hero = {
     "I'm John Charlie Catedrilla. I build production web applications end to end — from data models and machine-learning features to the interfaces people actually use.",
 } as const;
 
+/**
+ * Approved personal introduction and interests, shared by the long-form
+ * About section and the About Quest Journal. Rendered in the About
+ * presentations only — never in the profile copy.
+ */
+export interface PersonalInterest {
+  title: string;
+  body: string;
+}
+
+export interface PersonalInterestsContent {
+  introduction: string;
+  interests: readonly PersonalInterest[];
+}
+
+export const personalInterests: PersonalInterestsContent = {
+  introduction:
+    "I’m a Computer Science graduate and AI/full-stack product engineer. I enjoy turning new ideas in AI into software people can actually use, while staying curious about where the field is going next.",
+  interests: [
+    {
+      title: "Gaming",
+      body: "Gaming is my main hobby and part of why this portfolio takes the shape of a world map.",
+    },
+    {
+      title: "AI exploration",
+      body: "Outside day-to-day delivery, I follow reinforcement learning, emerging AI architectures, and the long-term question of how intelligent systems might move beyond today’s language-model patterns.",
+    },
+  ],
+};
+
 export const about: AboutContent = {
   heading: "About",
   paragraphs: [
+    personalInterests.introduction,
     "I've spent the last few years building software that has to work for real people: full-stack web applications, machine-learning features, and the automations that connect them. I like owning a problem from the ambiguous first conversation to the deployed feature.",
     "Most of my recent work sits where AI engineering meets product delivery — agents, retrieval, and workflow automation integrated into systems that need to hold up outside of a demo. I care about the unglamorous parts: clear data models, honest error states, and code the next developer can safely change.",
   ],

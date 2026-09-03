@@ -1,22 +1,22 @@
 {
-  "scannedAt": "2026-09-01T12:11:59Z",
+  "scannedAt": "2026-09-03T00:14:30Z",
   "sources": {
     "package": "package.json",
     "layout": "app/layout.tsx",
-    "styles": "app/globals.css"
+    "styles": "app/globals.css",
+    "homepage": "app/home.module.css"
   },
   "framework": "Next.js 16 App Router with React 19, Tailwind CSS 4, Vinext, and Cloudflare Workers",
-  "fontStack": "Geist and Geist Mono loaded with next/font; body currently overrides them with Arial/Helvetica",
-  "palette": "Minimal light/dark background and foreground tokens with gray, blue, green, and purple utility accents",
-  "motion": "motion-cut; no dedicated motion library",
-  "spacing": "Tailwind default spacing; no project semantic spacing tokens",
+  "fontStack": "Geist and Geist Mono loaded with next/font and consumed through --font-body and --font-display",
+  "palette": "Established dark navy world-map palette with gold, cyan, green, muted, surface, line, and focus tokens",
+  "motion": "Custom requestAnimationFrame map travel with reduced-motion support; no dedicated motion dependency",
+  "spacing": "Existing homepage-specific spacing and responsive composition; no separate global semantic spacing scale",
   "preserve": [
-    "Next.js App Router boundary",
-    "Tailwind CSS entry import",
-    "Cloudflare/Vinext deployment model unless a later decision changes it"
+    "Next.js App Router and Cloudflare/Vinext boundaries",
+    "Geist and Geist Mono typography",
+    "Existing dark navy, gold, cyan, and green token palette",
+    "Approved world-map composition and restrained interaction language",
+    "Current focus, reduced-motion, and responsive behavior"
   ],
-  "openConflicts": [
-    "Geist is configured in app/layout.tsx but app/globals.css hard-codes Arial/Helvetica on body",
-    "No locked design.md or established semantic token system exists"
-  ]
+  "openConflicts": []
 }

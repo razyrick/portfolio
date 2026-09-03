@@ -5,6 +5,8 @@ import {
   contact,
   experience,
   hero,
+  identity,
+  personalInterests,
   personalWork,
   selectedWork,
   thesisNote,
@@ -28,7 +30,7 @@ const EXTERNAL_LINK_ATTRS = {
   rel: "noopener noreferrer",
 } as const;
 
-const profileLinks = ["email", "github", "linkedin"].flatMap((id) => {
+const profileLinks = ["email", "github", "linkedin", "discord"].flatMap((id) => {
   const channel = contact.channels.find((candidate) => candidate.id === id);
   if (!channel) return [];
   return [
@@ -57,17 +59,22 @@ export default function Home() {
 
       <header className={styles.topbar}>
         <div className={styles.brand}>
-          {/* The approved static mark bypasses the unavailable Cloudflare Images binding. */}
+          {/* The tightly framed static mark stays legible at navigation scale. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={styles.brandMark}
-            src="/images/jcharlie-shield-logo.webp"
+            src="/images/jcharlie-shield-mark.png"
             alt=""
-            width={26}
-            height={26}
+            width={36}
+            height={36}
           />
-          <strong>John Charlie</strong>
-          <span>Machine Learning Engineer / Full Stack Developer</span>
+          <span className={styles.brandText}>
+            <strong>{identity.name}</strong>
+            <span className={styles.brandAlias}>aka {identity.alias}</span>
+            <span className={styles.brandRole}>
+              Machine Learning Engineer / Full Stack Developer
+            </span>
+          </span>
         </div>
         <nav className={styles.topnav} aria-label="Primary">
           <a className={styles.topnavLink} href="#home">
@@ -93,7 +100,12 @@ export default function Home() {
             <h1 className={styles.profileTitle} id="profile-name">
               <span className={styles.profileNamePart}>John</span>{" "}
               <span className={styles.profileNamePart}>Charlie</span>{" "}
-              <span className={styles.profileNamePart}>Catedrilla</span>
+              <span className={styles.profileNamePart}>
+                Catedrilla{" "}
+                <span className={styles.profileAlias}>
+                  aka {identity.alias}
+                </span>
+              </span>
             </h1>
             <p className={styles.role}>{experience.entries[0]?.role}</p>
             <p className={styles.profileCopy}>{hero.introduction}</p>
@@ -142,6 +154,14 @@ export default function Home() {
               {about.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
+              <ul className={styles.interestList}>
+                {personalInterests.interests.map((interest) => (
+                  <li key={interest.title}>
+                    <strong>{interest.title}</strong>
+                    <span>{interest.body}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className={styles.approach}>
               <h3 className={styles.approachTitle}>{approach.heading}</h3>

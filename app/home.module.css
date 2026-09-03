@@ -44,8 +44,8 @@
 }
 
 .brandMark {
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  height: 36px;
   flex: 0 0 auto;
 }
 
@@ -56,7 +56,20 @@
   text-transform: uppercase;
 }
 
-.brand span {
+.brandText {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brandAlias {
+  color: var(--muted);
+  font: 400 12px / 1.3 var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+.brandRole {
   color: var(--muted);
   font-size: 12px;
 }
@@ -114,6 +127,7 @@
  */
 .worldShell {
   min-height: calc(100vh - var(--header));
+  height: calc(100vh - var(--header));
   display: grid;
   grid-template-columns: minmax(220px, 16vw) minmax(560px, 1fr) minmax(300px, 21vw);
 }
@@ -153,6 +167,14 @@
 
 .profileNamePart {
   display: block;
+}
+
+.profileAlias {
+  margin-left: 8px;
+  color: var(--muted);
+  font: 400 clamp(13px, 1.2vw, 18px) / 1.2 var(--font-body);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .role {
@@ -199,13 +221,15 @@
   margin-top: auto;
   padding-top: 16px;
   display: flex;
-  gap: 2px;
+  flex-wrap: wrap;
+  gap: 1px;
 }
 
 .profileLinks a {
   position: relative;
   width: 44px;
   height: 44px;
+  flex: 0 0 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -595,6 +619,34 @@
   line-height: 1.75;
 }
 
+/*
+ * Compact personal-interest items, mirroring the Quest Journal's
+ * title-plus-copy rows inside the long-form About section.
+ */
+.interestList {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.interestList li {
+  display: grid;
+  gap: 2px;
+}
+
+.interestList strong {
+  font: 700 13px / 1.3 var(--font-display);
+  color: var(--gold-soft);
+}
+
+.interestList span {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .approach {
   margin-top: 30px;
 }
@@ -885,6 +937,16 @@
   }
 }
 
+/*
+ * The long role line only fits beside the full legal name on wide
+ * screens; the alias always stays visible.
+ */
+@media (max-width: 1279px) {
+  .brandRole {
+    display: none;
+  }
+}
+
 @media (max-width: 1180px) {
   .worldShell {
     grid-template-columns: 210px minmax(0, 1fr) 300px;
@@ -911,7 +973,11 @@
     padding: 7px 12px;
   }
 
-  .brand span,
+  .brandMark {
+    width: 32px;
+    height: 32px;
+  }
+
   .topnavLink:not(.resumeLink) {
     display: none;
   }
@@ -920,6 +986,7 @@
     display: flex;
     flex-direction: column;
     min-height: auto;
+    height: auto;
   }
 
   .profile {
@@ -1038,16 +1105,33 @@
   }
 }
 
-@media (max-width: 430px) {
+/*
+ * Narrow screens: stack the alias under the full legal name; the name
+ * may wrap word-by-word on the smallest widths instead of overflowing.
+ */
+@media (max-width: 600px) {
+  .brand {
+    gap: 10px;
+  }
+
+  .brandText {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    white-space: normal;
+  }
+
   .brand strong {
-    font-size: 14px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
   }
 
-  .brandMark {
-    width: 22px;
-    height: 22px;
+  .brandAlias {
+    font-size: 10.5px;
   }
+}
 
+@media (max-width: 430px) {
   .resumeLink {
     padding-inline: 10px;
     font-size: 11px;

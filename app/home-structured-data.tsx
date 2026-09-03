@@ -46,7 +46,7 @@ const person = {
   "@type": "Person",
   "@id": PERSON_ID,
   name: identity.name,
-  alternateName: identity.handle,
+  alternateName: identity.alias,
   url: SITE_URL,
   jobTitle: identity.role,
   knowsAbout: KNOWS_ABOUT,

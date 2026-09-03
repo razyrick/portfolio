@@ -4,6 +4,7 @@ import {
   capabilities,
   contact,
   experience,
+  personalInterests,
   personalWork,
   selectedWork,
   thesisNote,
@@ -121,6 +122,10 @@ export const destinations: Record<DestinationKey, Destination> = {
         title: "Working style",
         copy: "Product-minded, technically direct, and attentive to operational reality",
       },
+      ...personalInterests.interests.map((interest) => ({
+        title: interest.title,
+        copy: interest.body,
+      })),
     ],
     actionLabel: "Read profile",
     actionHref: "#about",
