@@ -88,7 +88,7 @@ export default function Home() {
             href={RESUME_PATH}
             {...RESUME_LINK_ATTRS}
           >
-            Résumé (PDF)
+            Resume (PDF)
           </a>
         </nav>
       </header>
@@ -315,7 +315,7 @@ export default function Home() {
               Prefer a document?{" "}
               <a href={RESUME_PATH} {...RESUME_LINK_ATTRS}>
                 <ContactIcon id="resume" className={styles.contactIcon} />
-                Download the résumé (PDF)
+                Download the resume (PDF)
               </a>
               .
             </p>

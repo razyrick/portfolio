@@ -226,17 +226,15 @@ export function WorldMap() {
   };
 
   /**
-   * On the enhanced desktop composition the long-form section stack is
-   * not visible, so the journal action re-selects its destination
-   * instead of scrolling; mobile and no-JS keep the anchor navigation.
+   * A meaningful journal action can select a different map destination on
+   * desktop; mobile and no-JS retain its ordinary anchor navigation.
    */
   const handleJournalActionClick = (
     event: MouseEvent<HTMLAnchorElement>,
   ) => {
-    const actionKey = destination?.actionKey;
+    const actionKey = destination?.action?.key;
     if (!actionKey || !window.matchMedia(DESKTOP_MEDIA_QUERY).matches) return;
     event.preventDefault();
-    if (actionKey === selectedKey) return;
     selectDestination(actionKey, { push: true });
   };
 
@@ -391,13 +389,15 @@ export function WorldMap() {
                 </li>
               ))}
             </ul>
-            <a
-              className={styles.journalAction}
-              href={destination.actionHref}
-              onClick={handleJournalActionClick}
-            >
-              {destination.actionLabel}
-            </a>
+            {destination.action ? (
+              <a
+                className={styles.journalAction}
+                href={destination.action.href}
+                onClick={handleJournalActionClick}
+              >
+                {destination.action.label}
+              </a>
+            ) : null}
           </div>
         </div>
       </aside>

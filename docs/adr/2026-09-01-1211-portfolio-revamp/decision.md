@@ -206,6 +206,18 @@ The current portfolio is a minimal technology-list page. It does not communicate
 - **Alternatives considered:** A second alias-only H1 was rejected because it weakens heading semantics. Hidden keyword text and repeated “Razyrick” stuffing were rejected as deceptive and low quality. Structured data alone was rejected because the alias should also be human-visible.
 - **Constraints and consequences:** The page keeps exactly one H1; the legal name remains the primary identity and the alias stays readable rather than visually hidden. Metadata must remain natural and within a useful search-result length. Canonical URL, social image, contact identities, and crawl permissions remain unchanged. Verification may prove that the alias exists in rendered HTML, metadata, and JSON-LD, but cannot promise Google indexing or ranking.
 
+### Quest Journal action semantics
+- **Decision:** Show a Quest Journal call-to-action only when it leads to a different destination or a real page/action. Remove self-referential buttons from About, Selected Work, Experience, Loadout, Optional Quests, and Party Invite.
+- **Rationale:** Those buttons implied deeper destinations but resolved to the section already selected; the enhanced desktop handler prevented their default anchor behavior and returned without changing state, making them literal no-ops.
+- **Alternatives considered:** Keeping the buttons as visual decoration and inventing dedicated pages for every destination were rejected. Controls must represent real behavior, and the approved route model intentionally has no separate professional About, Experience, Loadout, or contact pages.
+- **Constraints and consequences:** Keep the functional Home “View selected work” action, which changes the selected map destination. Preserve real inline thesis, personal-work, contact, and résumé links inside the journal. Do not add routes, dialogs, or substitute actions.
+
+### Resume display spelling
+- **Decision:** Use the unaccented English label “Resume” in visible portfolio controls and descriptions while leaving the PDF filename, URL, and document contents unchanged.
+- **Rationale:** The accented spelling is valid, but the unaccented form reads more naturally in this interface and avoids looking like a typographic error.
+- **Alternatives considered:** Keeping “Résumé” was explicitly declined.
+- **Constraints and consequences:** This is display-copy only; it does not modify the authoritative resume asset or its delivery behavior.
+
 ## Applicable Hallmark UX baseline
 
 - **Classification:** user-facing page redesign governing the public `/` route and the separately crawlable public thesis route. The Approved Visual Contract below governs the complete `/` route; the thesis route inherits its typography, color, navigation, and content-panel language but is outside the approved artifact frame.

@@ -54,13 +54,12 @@ export interface Destination {
   title: string;
   summary: string;
   items: readonly JournalItem[];
-  actionLabel: string;
-  actionHref: string;
-  /**
-   * Destination re-selected by the journal action on the enhanced desktop
-   * composition, where the long-form section stack is not visible.
-   */
-  actionKey?: DestinationKey;
+  action?: {
+    label: string;
+    href: string;
+    /** Destination selected by this action in the enhanced desktop journal. */
+    key?: DestinationKey;
+  };
 }
 
 export const DESTINATION_ORDER = [
@@ -98,9 +97,11 @@ export const destinations: Record<DestinationKey, Destination> = {
         copy: experience.entries.map((entry) => entry.company).join(" and "),
       },
     ],
-    actionLabel: "View selected work",
-    actionHref: "#selected-work",
-    actionKey: "projects",
+    action: {
+      label: "View selected work",
+      href: "#selected-work",
+      key: "projects",
+    },
   },
   about: {
     label: "About",
@@ -116,9 +117,6 @@ export const destinations: Record<DestinationKey, Destination> = {
       title: interest.title,
       copy: interest.body,
     })),
-    actionLabel: "Read profile",
-    actionHref: "#about",
-    actionKey: "about",
   },
   projects: {
     label: "Selected work",
@@ -142,9 +140,6 @@ export const destinations: Record<DestinationKey, Destination> = {
         href: `/work/${thesisNote.slug}`,
       },
     ],
-    actionLabel: "View quest log",
-    actionHref: "#selected-work",
-    actionKey: "projects",
   },
   experience: {
     label: "Experience",
@@ -161,9 +156,6 @@ export const destinations: Record<DestinationKey, Destination> = {
       title: entry.company,
       copy: `${entry.role} · ${entry.period}`,
     })),
-    actionLabel: "Open campaign log",
-    actionHref: "#experience",
-    actionKey: "experience",
   },
   loadout: {
     label: "Loadout",
@@ -180,9 +172,6 @@ export const destinations: Record<DestinationKey, Destination> = {
       title: group.title,
       copy: group.technologies.join(", "),
     })),
-    actionLabel: "Inspect loadout",
-    actionHref: "#loadout",
-    actionKey: "loadout",
   },
   optional: {
     label: "Optional quests",
@@ -202,9 +191,6 @@ export const destinations: Record<DestinationKey, Destination> = {
       href: item.href,
       external: item.external,
     })),
-    actionLabel: "Browse side quests",
-    actionHref: "#optional-quests",
-    actionKey: "optional",
   },
   contact: {
     label: "Party invite",
@@ -227,16 +213,13 @@ export const destinations: Record<DestinationKey, Destination> = {
         icon: channel.id,
       })),
       {
-        title: "Résumé",
-        copy: "Download the public résumé (PDF)",
+        title: "Resume",
+        copy: "Download the public resume (PDF)",
         href: RESUME_PATH,
         download: RESUME_FILE_NAME,
         icon: "resume",
       },
     ],
-    actionLabel: "Open contact routes",
-    actionHref: "#party-invite",
-    actionKey: "contact",
   },
 };
 
