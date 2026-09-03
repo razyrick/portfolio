@@ -59,7 +59,7 @@ export default function Home() {
 
       <header className={styles.topbar}>
         <div className={styles.brand}>
-          {/* The tightly framed static mark stays legible at navigation scale. */}
+          {/* Raw img avoids the unavailable Cloudflare Images binding; the tight crop stays legible at navigation scale. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={styles.brandMark}
@@ -72,7 +72,7 @@ export default function Home() {
             <strong>{identity.name}</strong>
             <span className={styles.brandAlias}>aka {identity.alias}</span>
             <span className={styles.brandRole}>
-              Machine Learning Engineer / Full Stack Developer
+              {experience.entries[0]?.role}
             </span>
           </span>
         </div>

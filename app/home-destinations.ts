@@ -111,22 +111,11 @@ export const destinations: Record<DestinationKey, Destination> = {
     markerY: "30.5%",
     kicker: "Character notes",
     title: "About",
-    summary:
-      "An AI and full-stack product engineer focused on useful systems, understandable interfaces, and responsible delivery.",
-    items: [
-      {
-        title: "Primary discipline",
-        copy: "Machine learning engineering and full-stack product development",
-      },
-      {
-        title: "Working style",
-        copy: "Product-minded, technically direct, and attentive to operational reality",
-      },
-      ...personalInterests.interests.map((interest) => ({
-        title: interest.title,
-        copy: interest.body,
-      })),
-    ],
+    summary: personalInterests.introduction,
+    items: personalInterests.interests.map((interest) => ({
+      title: interest.title,
+      copy: interest.body,
+    })),
     actionLabel: "Read profile",
     actionHref: "#about",
     actionKey: "about",

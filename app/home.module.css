@@ -938,8 +938,9 @@
 }
 
 /*
- * The long role line only fits beside the full legal name on wide
- * screens; the alias always stays visible.
+ * Below this width the same role remains visible in the player profile;
+ * hiding its duplicate here keeps the full legal name, alias, and résumé
+ * action uncrowded.
  */
 @media (max-width: 1279px) {
   .brandRole {
