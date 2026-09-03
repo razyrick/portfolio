@@ -70,7 +70,7 @@ export default function Home() {
           />
           <span className={styles.brandText}>
             <strong>{identity.name}</strong>
-            <span className={styles.brandAlias}>aka {identity.alias}</span>
+            <span className={styles.brandAlias}>{identity.alias}</span>
             <span className={styles.brandRole}>
               {experience.entries[0]?.role}
             </span>
@@ -102,9 +102,7 @@ export default function Home() {
               <span className={styles.profileNamePart}>Charlie</span>{" "}
               <span className={styles.profileNamePart}>
                 Catedrilla{" "}
-                <span className={styles.profileAlias}>
-                  aka {identity.alias}
-                </span>
+                <span className={styles.profileAlias}>{identity.alias}</span>
               </span>
             </h1>
             <p className={styles.role}>{experience.entries[0]?.role}</p>

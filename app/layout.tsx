@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 const DEFAULT_TITLE =
   "John Charlie Catedrilla (Razyrick) — AI & Full-Stack Engineer";
 const DEFAULT_DESCRIPTION =
-  "John Charlie Catedrilla, aka Razyrick, is a Computer Science graduate and AI/full-stack product engineer building useful software.";
+  "John Charlie Catedrilla (Razyrick) is a Computer Science graduate and AI/full-stack product engineer building useful software.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(CANONICAL_ORIGIN),
